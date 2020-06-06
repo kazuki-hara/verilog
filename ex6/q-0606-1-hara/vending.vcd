@@ -1,0 +1,191 @@
+$date
+	Sat Jun  6 15:56:48 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module test $end
+$var wire 1 ! item $end
+$var wire 7 " change [6:0] $end
+$var reg 1 # clk $end
+$var reg 1 $ coin_10 $end
+$var reg 1 % coin_50 $end
+$var reg 1 & rst $end
+$scope module x $end
+$var wire 1 # clk $end
+$var wire 1 $ coin_10 $end
+$var wire 1 % coin_50 $end
+$var wire 1 & rst $end
+$var reg 7 ' change [6:0] $end
+$var reg 1 ! item $end
+$var reg 7 ( nextstate [6:0] $end
+$var reg 7 ) state [6:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b0 )
+b0 (
+b0 '
+1&
+0%
+0$
+1#
+b0 "
+0!
+$end
+#5
+0#
+#10
+1#
+#15
+0#
+#20
+1#
+#25
+0#
+#30
+1#
+#35
+0#
+#40
+1#
+#45
+0#
+#50
+1#
+#55
+0#
+#60
+1#
+#65
+0#
+#70
+1#
+#75
+0#
+#80
+1#
+#85
+0#
+#90
+1#
+#95
+0#
+#100
+1#
+0&
+#105
+0#
+#110
+1#
+#115
+0#
+#120
+1#
+#125
+0#
+#130
+1#
+#135
+0#
+#140
+1#
+#145
+0#
+#150
+1#
+#155
+0#
+#160
+1#
+#165
+0#
+#170
+1#
+#175
+0#
+#180
+1#
+#185
+0#
+#190
+1#
+#195
+0#
+#200
+b1010 )
+b10100 (
+1#
+1$
+#205
+0#
+#210
+b11110 (
+b10100 )
+1#
+#215
+0#
+#220
+1!
+b10100 "
+b10100 '
+b1000110 )
+b0 (
+1#
+1%
+0$
+#225
+0#
+#230
+b0 "
+b0 '
+0!
+b0 )
+b0 (
+1#
+0%
+#235
+0#
+#240
+1#
+#245
+0#
+#250
+1#
+#255
+0#
+#260
+1#
+#265
+0#
+#270
+1#
+#275
+0#
+#280
+1#
+#285
+0#
+#290
+1#
+#295
+0#
+#300
+1#
+#305
+0#
+#310
+1#
+#315
+0#
+#320
+1#
+#325
+0#
+#330
+1#
