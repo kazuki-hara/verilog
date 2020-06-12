@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 module test;
-    logic clk, rst, coin_10, coin_50;
-    logic item;
-    logic [6:0] change;
+    reg clk, rst, coin_10, coin_50;
+    wire item;
+    wire [6:0] change;
     vending x(clk, rst, coin_10, coin_50, item, change);
     always #5 clk =~clk;
     initial begin
