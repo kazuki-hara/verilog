@@ -1,0 +1,82 @@
+$date
+	Mon Jul 13 01:08:09 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module test $end
+$var wire 1 ! ack3 $end
+$var wire 1 " ack2 $end
+$var wire 1 # ack1 $end
+$var wire 1 $ ack0 $end
+$var reg 1 % clk $end
+$var reg 1 & req0 $end
+$var reg 1 ' req1 $end
+$var reg 1 ( req2 $end
+$var reg 1 ) req3 $end
+$var reg 1 * rst $end
+$scope module arb $end
+$var wire 1 % clk $end
+$var wire 1 & req0 $end
+$var wire 1 ' req1 $end
+$var wire 1 ( req2 $end
+$var wire 1 ) req3 $end
+$var wire 1 * rst $end
+$var reg 1 $ ack0 $end
+$var reg 1 # ack1 $end
+$var reg 1 " ack2 $end
+$var reg 1 ! ack3 $end
+$var reg 2 + start [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx +
+1*
+0)
+0(
+0'
+0&
+0%
+x$
+x#
+x"
+x!
+$end
+#5
+0!
+0"
+0#
+0$
+b0 +
+1%
+#10
+0%
+0*
+#15
+1%
+#20
+0%
+1'
+#25
+1#
+1%
+#30
+0%
+1(
+#35
+1#
+1%
+#40
+0%
+0'
+#45
+1"
+0#
+1%
+#50
+0%

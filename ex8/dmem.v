@@ -12,7 +12,7 @@ module dmem(input [`DMSB:0] c, input [`WIDTH:0] wd, input we, output [`WIDTH:0] 
 				c_state <= c;
 				dm[c] <= wd;
 			end
-			if(cwe) dm[16] <= dm[c_state]+dm[16];
+			if(cwe && c<16) dm[16] <= dm[c_state]+dm[16];
 		end
 	end
 endmodule

@@ -33,21 +33,6 @@ module dec(input [`CMDS:0] o, output logic h, we, output logic [`RASB:0] wad,
 // 1 1 0 * * * * * * * * * * * * * ; C++
 */
 
-/*
-F E D C B A 9 8 7 6 5 4 3 2 1 0
-0 0 0 0 * * * * * * * * * 0 * 0 ; NOP
-0 0 0 0 * * * * * * * * * 0 * 1 ; HALT
-0 0 0 0 rw> a-> * op -> * 1 b-> ; CAL rw=ra,rb
-0 0 0 1 rw> a-> * op -> * 1 b-> ; LM rw=[ra op rb]
-0 0 1 o rw> a-> im------------> ; CAL rw=ra,im
-0 1 0 0 rw> a-> im------------> ; LIL rw=ra,im
-0 1 0 1 rw> a-> im------------> ; LIH rw=ra,im
-1 0 0 o rw> a-> im------------> ; LM rw=[ra o im] o=0:ADD/1:SUB
-1 0 1 o b-> a-> im------------> ; SM [ra o im]=rb
-// 0 1 0 p 1 1 f f im------------> ; JP/BR fp [PC + (s)im]
-// 0 1 1 p a-> f f im------------> ; JP/BR fp [ra + (s)im]
-*/
-
 	`LIDXENUM
 	enum {UC, ZE, CA, SG} FLAGTYP;
 	logic f1, f2;
