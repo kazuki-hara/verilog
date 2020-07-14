@@ -1,7 +1,7 @@
 all:
-	iverilog -g2012 2012 *.v
+	iverilog -g2012 *.v
 	vvp a.out
-
+	gtkwave sw.vcd
 show:
 	gtkwave sw.vcd
 

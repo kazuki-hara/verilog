@@ -1,61 +1,94 @@
 `include "sw.vh"
-module arb(input req0, req1, req2, req3, output ack0, ack1, ack2, ack3, input clk, rst);
-    logic [1:0] state;
-    logic ack0, ack1, ack2, ack3;
+
+module arb(input req0, req1, req2, req3, output logic ack0, ack1, ack2, ack3, input clk, rst);
+    logic [1:0] pc, next_pc, na_pc;
     always@(posedge clk)begin
         if(rst) begin
-            start <= 2'b00;
-            ack0 <= `NEGATE;
-            ack1 <= `NEGATE;
-            ack2 <= `NEGATE;
-            ack3 <= `NEGATE;
+            pc <= 2'b00;
+            next_pc <= 2'b00;
         end else begin
-            ack0 <= `NEGATE;
-            ack1 <= `NEGATE;
-            ack2 <= `NEGATE;
-            ack3 <= `NEGATE;
-            case(state)
-            // synopsys full_case parallel_case
-            2'b00: begin
-                if(req0) ack0 <= `ASSERT;
-                else if(req1) ack1 <= `ASSERT;
-                else if(req2) ack2 <= `ASSERT;
-                else if(req3) ack3 <= `ASSERT;
-            end
-            2'b01: begin
-                if(req1) ack1 <= `ASSERT;
-                else if(req2) ack2 <= `ASSERT;
-                else if(req3) ack3 <= `ASSERT;
-                else if(req0) ack0 <= `ASSERT;
-            end
-            2'b10: begin
-                if(req2) ack2 <= `ASSERT;
-                else if(req3) ack3 <= `ASSERT;
-                else if(req0) ack0 <= `ASSERT;
-                else if(req1) ack1 <= `ASSERT;
-            end
-            2'b11: begin
-                if(req3) ack3 <= `ASSERT;
-                else if(req0) ack0 <= `ASSERT;
-                else if(req1) ack1 <= `ASSERT;
-                else if(req2) ack2 <= `ASSERT;
-            end
-            endcase
+            pc <= next_pc;
         end
     end
-    
     always@* begin
-        case(state)
-        // synopsys full_case parallel_case
-        2'b00: if(negedge req0) state <= state+1;
-        2'b01: if(negedge req1) state <= state+1;
-        2'b10: if(negedge req2) state <= state+1;
-        2'b11: if(negedge req3) state <= state+1;
+        if(rst)na_pc = 2'b01;
+        ack0 = `NEGATE;
+        ack1 = `NEGATE;
+        ack2 = `NEGATE;
+        ack3 = `NEGATE;
+        case(pc)
+        2'b00: begin
+            if(req0) ack0 = `ASSERT;
+            else if(req1) ack1 = `ASSERT;
+            else if(req2) ack2 = `ASSERT;
+            else if(req3) ack3 = `ASSERT;
+            else na_pc = 2'b01;
+        end
+        2'b01: begin
+            if(req1) ack1 = `ASSERT;
+            else if(req2) ack2 = `ASSERT;
+            else if(req3) ack3 = `ASSERT;
+            else if(req0) ack0 = `ASSERT;
+            else na_pc = 2'b10;
+        end
+        2'b10: begin
+            if(req2) ack2 = `ASSERT;
+            else if(req3) ack3 = `ASSERT;
+            else if(req0) ack0 = `ASSERT;
+            else if(req1) ack1 = `ASSERT;
+            else na_pc = 2'b10;
+        end
+        2'b11: begin
+            if(req3) ack3 = `ASSERT;
+            else if(req0) ack0 = `ASSERT;
+            else if(req1) ack1 = `ASSERT;
+            else if(req2) ack2 = `ASSERT;
+            else na_pc = 2'b00;
+        end
         endcase
     end
-    
+    always@(negedge req0 or negedge req1 or negedge req2 or negedge req3)begin
+        next_pc <= na_pc;
+    end
 endmodule
 
+/*
+module arb(input req0, req1, req2, req3, output logic ack0, ack1, ack2, ack3, input clk, rst);
+    logic [1:0] pc, next_pc, na_pc;
+    logic [`PORT:0] req, ack;
+    always@(posedge clk)begin
+        if(rst) begin
+            pc <= 2'b00;
+            next_pc <= 2'b00;
+        end else begin
+            pc <= next_pc;
+        end
+    end
+
+    always@* begin
+        if(rst)begin
+            na_pc = 2'b01;
+        end else begin
+            ack = 4'b0000;
+            if(req[pc]) ack[pc] = `ASSERT;
+            else if(req[pc+1]) ack[pc+1] = `ASSERT;
+            else if(req[pc+2]) ack[pc+2] = `ASSERT;
+            else if(req[pc+3]) ack[pc+3] = `ASSERT;
+            else na_pc = pc+1;
+        end
+    end
+
+    always@* begin
+        req = {req3, req2, req1, req0};
+        {ack3, ack2, ack1, ack0} = ack;
+    end
+
+    always@(negedge req0 or negedge req1 or negedge req2 or negedge req3)begin
+        next_pc <= na_pc;
+    end
+endmodule
+*/
+/*
 module test;
     logic req0, req1, req2, req3, ack0, ack1, ack2, ack3;
     logic clk, rst;
@@ -64,8 +97,9 @@ module test;
 	initial begin
 	$dumpfile("test.vcd");
 	$dumpvars(0, test);
-    clk = 0;
     rst = 1;
+    clk = 1;
+    #10
     req0 = `NEGATE;
     req1 = `NEGATE;
     req2 = `NEGATE;
@@ -73,12 +107,19 @@ module test;
     #10
     rst = 0;
     #10
-    req1 = `ASSERT;
-    #10
     req2 = `ASSERT;
-    #10
+    #30
+    req0 = `ASSERT;
+    #30
+    req2 = `NEGATE;
+    #30
+    req1 = `ASSERT;
+    #30
+    req0 = `NEGATE;
+    #30
     req1 = `NEGATE;
-    #10
+    #30
 	$finish;
 	end
 endmodule
+*/
