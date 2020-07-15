@@ -1,5 +1,5 @@
 all:
-	iverilog -g2012 *.v
+	iverilog -g2012 ackor.v arb.v cb.v cbsel.v fifo.v ib.v ibout.v ibsm.v mkreq.v mkwe.v sw.v swtest.v
 	vvp a.out
 	gtkwave sw.vcd
 show:

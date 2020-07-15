@@ -2,7 +2,7 @@
 module ackor(input ack0n, ack1n, ack2n, ack3n, output ack);
     logic ack;
     always@*
-        ack <= ack0n || ack1n || ack2n || ack3n;
+        ack = ack0n | ack1n | ack2n | ack3n;
 endmodule
 
 /*

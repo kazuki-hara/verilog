@@ -1,54 +1,53 @@
 `include "sw.vh"
 
 module arb(input req0, req1, req2, req3, output logic ack0, ack1, ack2, ack3, input clk, rst);
-    logic [1:0] pc, next_pc, na_pc;
+    logic [1:0] pc, next_pc;
     always@(posedge clk)begin
         if(rst) begin
             pc <= 2'b00;
-            next_pc <= 2'b00;
         end else begin
             pc <= next_pc;
         end
     end
     always@* begin
-        if(rst)na_pc = 2'b01;
-        ack0 = `NEGATE;
-        ack1 = `NEGATE;
-        ack2 = `NEGATE;
-        ack3 = `NEGATE;
-        case(pc)
-        2'b00: begin
-            if(req0) ack0 = `ASSERT;
-            else if(req1) ack1 = `ASSERT;
-            else if(req2) ack2 = `ASSERT;
-            else if(req3) ack3 = `ASSERT;
-            else na_pc = 2'b01;
+        if(rst)next_pc = 2'b01;
+        else begin
+            ack0 = `NEGATE;
+            ack1 = `NEGATE;
+            ack2 = `NEGATE;
+            ack3 = `NEGATE;
+            case(pc)
+            // synopsys full_case parallel_case
+            2'b00: begin
+                if(req0) ack0 = `ASSERT;
+                else if(req1) ack1 = `ASSERT;
+                else if(req2) ack2 = `ASSERT;
+                else if(req3) ack3 = `ASSERT;
+                else next_pc = 2'b01;
+            end
+            2'b01: begin
+                if(req1) ack1 = `ASSERT;
+                else if(req2) ack2 = `ASSERT;
+                else if(req3) ack3 = `ASSERT;
+                else if(req0) ack0 = `ASSERT;
+                else next_pc = 2'b10;
+            end
+            2'b10: begin
+                if(req2) ack2 = `ASSERT;
+                else if(req3) ack3 = `ASSERT;
+                else if(req0) ack0 = `ASSERT;
+                else if(req1) ack1 = `ASSERT;
+                else next_pc = 2'b10;
+            end
+            2'b11: begin
+                if(req3) ack3 = `ASSERT;
+                else if(req0) ack0 = `ASSERT;
+                else if(req1) ack1 = `ASSERT;
+                else if(req2) ack2 = `ASSERT;
+                else next_pc = 2'b00;
+            end
+            endcase
         end
-        2'b01: begin
-            if(req1) ack1 = `ASSERT;
-            else if(req2) ack2 = `ASSERT;
-            else if(req3) ack3 = `ASSERT;
-            else if(req0) ack0 = `ASSERT;
-            else na_pc = 2'b10;
-        end
-        2'b10: begin
-            if(req2) ack2 = `ASSERT;
-            else if(req3) ack3 = `ASSERT;
-            else if(req0) ack0 = `ASSERT;
-            else if(req1) ack1 = `ASSERT;
-            else na_pc = 2'b10;
-        end
-        2'b11: begin
-            if(req3) ack3 = `ASSERT;
-            else if(req0) ack0 = `ASSERT;
-            else if(req1) ack1 = `ASSERT;
-            else if(req2) ack2 = `ASSERT;
-            else na_pc = 2'b00;
-        end
-        endcase
-    end
-    always@(negedge req0 or negedge req1 or negedge req2 or negedge req3)begin
-        next_pc <= na_pc;
     end
 endmodule
 

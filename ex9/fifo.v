@@ -12,9 +12,11 @@ module fifo(input [`PKTW:0] in, input we, output logic full,
 			if(we) begin
 				mem[head] <= in;
 				head <= headi;
+			end else begin
 			end
 			if(re) begin
 				if(head != tail) tail <= tail + 1;
+			end else begin
 			end
 		end
 	end

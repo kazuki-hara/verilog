@@ -2,8 +2,11 @@
 module swtest;
 	logic [`PKTW:0] i0, i1, i2, i3;
 	logic [`PKTW:0] o0, o1, o2, o3;
+	logic [`PKTW:0] a0, a1, a2, a3, b0, b1, b2, b3;
 	logic clk, rst;
-	sw sw(i0, i1, i2, i3, o0, o1, o2, o3, clk, rst);
+	sw sw0(i0, i1, i2, i3, a0, a1, a2, a3, clk, rst);
+	sw sw1(a1, a3, a0, a2, b0, b1, b2, b3, clk, rst);
+	sw sw2(b3, b2, b1, b0, o0, o1, o2, o3, clk, rst);
 	always #5 clk = ~clk;
 initial begin
 $dumpfile("sw.vcd");

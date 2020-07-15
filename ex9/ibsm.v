@@ -15,7 +15,11 @@ input [`PORT:0] reqi, output [`PORT:0] req, input ack, input clk, rst);
 
     always@* begin
         if(flowb == `HEAD) req <= reqi;
-        else if(flowb == `EMPT) req <= 4'b0000;
+        else begin
+            if(flowb == `EMPT) req <= 4'b0000;
+            else begin
+            end
+        end
     end
 endmodule
 

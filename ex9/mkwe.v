@@ -1,9 +1,8 @@
 `include "sw.vh"
 module mkwe(input [`PKTW:0] pkti, output logic we);
-    always@* begin
+    always@*
 		if(pkti[9:8] == `EMPT) we = 0;
 		else we = 1;
-	end
 endmodule
 
 /*

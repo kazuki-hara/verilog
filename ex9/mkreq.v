@@ -21,7 +21,7 @@ module mkreq(input [`PKTW:0] pkto, output logic [`PORT:0] reqi/*, input clk, rst
             2'b01: reqi <= 4'b0010;
             2'b10: reqi <= 4'b0100;
             2'b11: reqi <= 4'b1000;
-            endcase
+        endcase
     end
 endmodule
 
